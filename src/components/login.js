@@ -8,10 +8,15 @@ import Col from 'react-bootstrap/Col'
 import authedUser from "../reducers/authedUser";
 
 class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.onSubmit = this.onSubmit.bind(this);
+    }
 
-    onSubmit() {
-        console.log('the value of authedUser', this.state.authedUser)
-        setAuthedUser(this.state.authedUser)
+    onSubmit(event) {
+        event.preventDefault();
+        console.log('the value of authedUser', this.state.authedUser);
+        setAuthedUser(this.state.authedUser);
     }
 
     handleUserInput(event) {
@@ -21,10 +26,13 @@ class Login extends Component {
     }
 
     render() {
+        const disabled = false
+        if (this.state === '') {
+            this.disabled = true;
+        }
         const titleStyle = {
             fontFamily: "Montserrat",
         };
-        console.log('the props are', this.props)
         return (
             <div className="jumbotron vertical-center">
                 <Container>
@@ -34,18 +42,27 @@ class Login extends Component {
                             <h2 style={titleStyle}>Please sign in to play</h2>
                             <Form onSubmit={this.onSubmit}>
                                 <Form.Group>
-                                    <Form.Label style={titleStyle}>Please Select the desired User</Form.Label>
+                                    <Form.Label style={titleStyle}>
+                                        Please Select the desired User
+                                    </Form.Label>
                                     <br/>
                                     <br/>
-                                    <Form.Control as="select" onChange={(event) => this.handleUserInput(event)}>
-                                        {this.props.users.map(({name, id}) => <option value={id}>{name}</option>)}
+                                    <Form.Control
+                                        as='select'
+                                        onChange={(event) => this.handleUserInput(event)}
+                                    >
+                                        {this.props.users.map(({name, id}) => (
+                                            <option value={id}>{name}</option>
+                                        ))}
                                     </Form.Control>
                                 </Form.Group>
+                                <br/>
+                                <div>
+                                    <button type='submit' disabled={disabled} className='btn btn-primary btn-block '>
+                                        Submit
+                                    </button>
+                                </div>
                             </Form>
-                            <br/>
-                            <div>
-                                <button type="submit" className="btn btn-primary btn-block ">Submit</button>
-                            </div>
                         </Col>
                     </Row>
                 </Container>
