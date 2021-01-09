@@ -41,6 +41,7 @@ class App extends Component {
 //         authedUser
 //     };
 // }
+// export default connect(mapStateToProps, {handleInitialData})(App)
 
 export default connect()(App)
 
