@@ -5,28 +5,25 @@ import {handleInitialData} from "../actions/shared";
 import Login from "./login";
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import NavBar from "./NavBar";
-import mapStateToProps from "react-redux/lib/connect/mapStateToProps";
 import authedUser from "../reducers/authedUser";
 import HomePage from "./HomePage";
 
 class App extends Component {
     componentDidMount() {
-        this.props.dispatch(handleInitialData())
+        this.props.handleInitialData();
     }
-
     render() {
         const {authedUser} = this.props;
-        // console.log('my props are', this.props)
         console.log('gello')
         console.log(this.props.authedUser)
         return (
             <Router>
                 <div>
-                    {this.props.authedUser === undefined ? (
-                            <Route exact path="/">
+                    {this.props.authedUser === null ? (
+                            <Route>
                                 <Login/>
                             </Route>) :
-                        (<Route path="/home">
+                        (<Route path="/">
                             <HomePage/>
                         </Route>)}
                 </div>
@@ -36,12 +33,12 @@ class App extends Component {
 }
 
 
-// function mapStateToProps({authedUser}) {
-//     return {
-//         authedUser
-//     };
-// }
-// export default connect(mapStateToProps, {handleInitialData})(App)
+function mapStateToProps({authedUser}) {
+    return {
+        authedUser
+    };
+}
+export default connect(mapStateToProps, {handleInitialData})(App)
 
-export default connect()(App)
+
 
