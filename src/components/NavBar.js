@@ -7,7 +7,7 @@ import {setAuthedUser} from "../actions/authedUser";
 class NavBar extends Component {
     logout(event){
         event.preventDefault();
-        setAuthedUser(null);
+        this.props.setAuthedUser(null);
     }
     render() {
         const {authedUser, users} = this.props;
@@ -23,10 +23,16 @@ class NavBar extends Component {
                     </Nav>
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">
-                    <Navbar.Text>
-                        {/*Signed in as: <a href="#login">{users[authedUser].name}</a>*/}
-                    </Navbar.Text>
-                    <button id="logoutButton" onClick={(event) => this.logout(event)}>Logout</button>
+                    {authedUser && (
+                        <>
+                            <Navbar.Text>
+                                Signed in as:<a href='#login'>{users[authedUser].name}</a>
+                            </Navbar.Text>
+                            <button id='logoutButton' onClick={(event) => this.logout(event)}>
+                                Logout
+                            </button>
+                        </>
+                    )}
                 </Navbar.Collapse>
             </Navbar>
         )

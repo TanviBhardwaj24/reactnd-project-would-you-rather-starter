@@ -21,11 +21,10 @@ class Login extends Component {
     onSubmit(event) {
         event.preventDefault();
         console.log('the value of authedUser', this.state.authedUser);
-        setAuthedUser(this.state.authedUser);
+        this.props.dispatch(setAuthedUser(this.state.authedUser));
     }
 
     handleUserInput(event) {
-        console.log(event.target.value)
         const userId = event.target.value
         this.setState({authedUser: userId})
     }

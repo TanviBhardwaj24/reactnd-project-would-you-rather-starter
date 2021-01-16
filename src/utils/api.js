@@ -5,6 +5,10 @@ import {
     _saveQuestionAnswer
 } from './_DATA.js'
 
+export function formatQuestion(optionOneText, optionTwoText, author){
+    return formatQuestion ({ optionOneText, optionTwoText, author });
+}
+
 export function getInitialData () {
     return Promise.all([
         _getUsers(),

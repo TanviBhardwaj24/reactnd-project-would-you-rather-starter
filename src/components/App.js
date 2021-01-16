@@ -14,8 +14,8 @@ class App extends Component {
     }
     render() {
         const {authedUser} = this.props;
-        console.log('gello')
-        console.log(this.props.authedUser)
+        // console.log(this.props.authedUser)
+        console.log('the props are ',this.props)
         return (
             <Router>
                 <div>
