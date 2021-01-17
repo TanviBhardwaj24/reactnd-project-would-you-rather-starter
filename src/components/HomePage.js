@@ -3,6 +3,8 @@ import NavBar from "./NavBar";
 import {connect} from "react-redux";
 import {handleInitialData} from "../actions/shared";
 import UserQuestionCard from "./UserQuestionCard";
+import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
+
 
 class HomePage extends Component {
     render() {
@@ -11,44 +13,42 @@ class HomePage extends Component {
             <div>
                 <NavBar/>
                 <br/>
-                <ul className="nav nav-tabs">
-                    <li className="nav-item">
-                        <a className="nav-link active" href="#">Unanswered Questions</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Answered Questions</a>
-                    </li>
-                </ul>
+                <Nav variant="tabs" defaultActiveKey="/home">
+                    {/*<Nav.Item>*/}
+                    {/*    {this.props.unansweredQuestionsByUser?<Nav.Link eventKey="unanswered">Unanswered Questions</Nav.Link>*/}
+                    {/*        :<Nav.Link eventKey="answered">Answered Questions</Nav.Link>}*/}
+                    {/*</Nav.Item>*/}
+                    <Nav.Item>
+                        <Nav.Link eventKey="unanswered">Unanswered Questions</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="answered">Answered Questions</Nav.Link>
+                    </Nav.Item>
+                </Nav>
                 <div>
-                    {/*{this.props.usersAvatar.map((obj)=>(*/}
-                    {/*    <UserQuestionCard userAvatar = {obj.avatarURL}*/}
-                    {/*    />*/}
-                    {/*))}*/}
-                    {this.props.questionsOptionOneText.map((obj)=>(
+                    {this.props.questionsOptionOneText.map((obj) => (
                         <UserQuestionCard
-                            questionText = {obj.optionOne.text}
-                            userAvatar = {this.props.questionsOptionOneText[obj.author.avatarURL]}/>
+                            questionText={obj.optionOne.text}
+                            userAvatar={this.props.usersAvatar[obj.author].avatarURL}/>
                     ))}
-                    {/*<UserQuestionCard questionText = {}/>*/}
-                    {/*<ul>*/}
-                    {/*    {this.props.questionsId.map((id) => (*/}
-                    {/*        <li key={id}>*/}
-                    {/*            <div>The question is: {id}</div>*/}
-                    {/*            /!*<div><UserQuestionCard/></div>*!/*/}
-                    {/*        </li>*/}
-                    {/*    ))}*/}
-                    {/*</ul>*/}
                 </div>
             </div>
         )
     }
 }
 
-function mapStateToProps({questions, users}) {
+function mapStateToProps({authedUser, questions, users}) {
+    const questionsId = Object.keys(questions).sort((a, b) => questions[b].timestamp - questions[a].timestamp);
+    const questionsOptionOneText = Object.values(questions);
+    const usersAvatar = users;
+    const answeredQuestionsByUser = Object.keys(users[authedUser].answers);
+    const unansweredQuestionsByUser = Object.values(questions).filter((question) => !answeredQuestionsByUser.includes(question.id));
     return {
-        questionsId: Object.keys(questions).sort((a, b) => questions[b].timestamp - questions[a].timestamp),
-        questionsOptionOneText: Object.values(questions),
-        usersAvatar: Object.values(users)
+        questionsId,
+        questionsOptionOneText,
+        answeredQuestionsByUser,
+        usersAvatar,
+        unansweredQuestionsByUser
     }
 }
 

@@ -10,8 +10,8 @@ class UserQuestionCard extends Component {
         const questionText = this.props.questionText;
         const userAvatar = this.props.userAvatar
         return (
-            <div >
-                <Card style={{ width: '14rem' }}>
+            <div>
+                <Card style={{ marginBlockStart:'2rem',marginInlineStart:'25rem',width: '25rem' }}>
                     <Card.Img variant="top" src={userAvatar} />
                     <Card.Body>
                         <Card.Title>Would You Rather</Card.Title>
@@ -27,9 +27,7 @@ class UserQuestionCard extends Component {
 }
 
 function mapStateToProps({questions, authedUser, users}, {id}) {
-    // const question = questions[id]
     return {
-        // question: formatQuestion(question.optionOne.text,question.optionTwo.text, authedUser),
         authedUser,
         users,
         questions
