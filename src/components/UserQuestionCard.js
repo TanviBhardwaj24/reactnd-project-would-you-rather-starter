@@ -2,24 +2,55 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button'
+import { Redirect } from 'react-router-dom';
 import {formatQuestion} from "../utils/api"
+import ViewPollQuestion from "./ViewPollQuestion";
+import ViewPollResult from "./ViewPollResult";
 
 class UserQuestionCard extends Component {
+    constructor(props) {
+        super(props);
+        this.state =({
+            viewPoll: false
+        })
+        this.handleClick = this.handleClick.bind(this);
+    }
+    handleClick () {
+        this.setState(state => ({
+            viewPoll: !state.viewPoll
+        }));
+    }
     render() {
         console.log('the props on my user card page are ', this.props)
+        const questionStatus = this.props.questionStatus
         const questionText = this.props.questionText;
         const userAvatar = this.props.userAvatar
-        // handleClick()
+        const authorName = this.props.authorName
+
+        if(questionStatus === 'unanswered' && this.state.viewPoll === true){
+            //redirect to the page which allows the user to vote for the question
+            <ViewPollQuestion/>
+            // return <Redirect push to={`/questions/${question.id}`} />;
+
+        } else if(questionStatus === 'answered' && this.state.viewPoll === true){
+            //redirect to the page which allows the user to view who voted for the question
+            <ViewPollResult/>
+            // return <Redirect push to={`/questions/${question.id}`} />;
+        }
+
         return (
             <div>
-                <Card style={{ marginBlockStart:'2rem',marginInlineStart:'25rem',width: '25rem' }}>
+                <Card style={{ marginBlockStart:'2rem',marginInlineStart:'29rem',width: '25rem' }}>
+                    <Card.Text>
+                        <b>{authorName}</b> asks
+                    </Card.Text>
                     <Card.Img variant="top" src={userAvatar} />
                     <Card.Body>
                         <Card.Title>Would You Rather</Card.Title>
                         <Card.Text>
                            ... {questionText} ...
                         </Card.Text>
-                        {/*<Button onClick={this.handleClick}>View Poll</Button>*/}
+                        <Button onClick={this.handleClick}>View Poll</Button>
                     </Card.Body>
                 </Card>
             </div>

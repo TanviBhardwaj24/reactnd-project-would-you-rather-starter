@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import NavBar from "./NavBar";
 import {connect} from "react-redux";
 import {handleInitialData} from "../actions/shared";
@@ -17,7 +17,6 @@ class HomePage extends Component {
         this.setState({
             key: key
         })
-        alert(`selected ${key}`)
     }
     render() {
         console.log('props on the homepage are', this.props)
@@ -27,7 +26,6 @@ class HomePage extends Component {
                 <NavBar/>
                 <br/>
                 <Nav variant="tabs" defaultActiveKey="unanswered" onSelect={this.handleSelect}>
-                    {/*{this.state === "unanswered" ? this.props.unansweredQuestionsByUser : this.props.answeredQuestionsByUser}*/}
                     <Nav.Item>
                         <Nav.Link eventKey="unanswered">Unanswered Questions</Nav.Link>
                     </Nav.Item>
@@ -37,20 +35,17 @@ class HomePage extends Component {
                 </Nav>
                 {this.state.key === "unanswered" ? this.props.unansweredQuestionsByUser.map((obj)=>(
                     <UserQuestionCard
+                        questionStatus = 'unanswered'
+                        authorName = {this.props.usersAvatar[obj.author].name}
                         questionText={obj.optionOne.text}
                         userAvatar={this.props.usersAvatar[obj.author].avatarURL}/>
                 )):this.props.answeredQuestionsByUser.map((obj)=>(
                     <UserQuestionCard
+                        questionStatus = 'answered'
+                        authorName = {this.props.usersAvatar[obj.author].name}
                         questionText={obj.optionOne.text}
                         userAvatar={this.props.usersAvatar[obj.author].avatarURL}/>
                 ))}
-                {/*<div>*/}
-                {/*    {this.props.questionsOptionOneText.map((obj) => (*/}
-                {/*        <UserQuestionCard*/}
-                {/*            questionText={obj.optionOne.text}*/}
-                {/*            userAvatar={this.props.usersAvatar[obj.author].avatarURL}/>*/}
-                {/*    ))}*/}
-                {/*</div>*/}
             </div>
         )
     }
@@ -60,8 +55,11 @@ function mapStateToProps({authedUser, questions, users}) {
     const questionsId = Object.keys(questions).sort((a, b) => questions[b].timestamp - questions[a].timestamp);
     const questionsOptionOneText = Object.values(questions);
     const usersAvatar = users;
-    const answeredQuestionsByUser = Object.keys(users[authedUser].answers);
-    const unansweredQuestionsByUser = Object.values(questions).filter((question) => !answeredQuestionsByUser.includes(question.id));
+    const answeredQuestionIdsByUser = Object.keys(users[authedUser].answers);
+    const answeredQuestionsByUser = Object.keys(users[authedUser].answers).map(
+        (questionID) => questions[questionID]
+    ).sort((a, b) => b.timestamp - a.timestamp);
+    const unansweredQuestionsByUser = Object.values(questions).filter((question) => !answeredQuestionIdsByUser.includes(question.id)).sort((a, b) => b.timestamp - a.timestamp);
     return {
         questionsId,
         questionsOptionOneText,
