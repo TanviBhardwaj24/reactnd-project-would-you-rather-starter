@@ -9,6 +9,7 @@ class UserQuestionCard extends Component {
         console.log('the props on my user card page are ', this.props)
         const questionText = this.props.questionText;
         const userAvatar = this.props.userAvatar
+        // handleClick()
         return (
             <div>
                 <Card style={{ marginBlockStart:'2rem',marginInlineStart:'25rem',width: '25rem' }}>
@@ -18,7 +19,7 @@ class UserQuestionCard extends Component {
                         <Card.Text>
                            ... {questionText} ...
                         </Card.Text>
-                        <Button variant="primary">View Poll</Button>
+                        {/*<Button onClick={this.handleClick}>View Poll</Button>*/}
                     </Card.Body>
                 </Card>
             </div>
