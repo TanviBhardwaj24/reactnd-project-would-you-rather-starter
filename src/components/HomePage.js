@@ -35,12 +35,14 @@ class HomePage extends Component {
                 </Nav>
                 {this.state.key === "unanswered" ? this.props.unansweredQuestionsByUser.map((obj)=>(
                     <UserQuestionCard
+                        questionID = {obj.id}
                         questionStatus = 'unanswered'
                         authorName = {this.props.usersAvatar[obj.author].name}
                         questionText={obj.optionOne.text}
                         userAvatar={this.props.usersAvatar[obj.author].avatarURL}/>
                 )):this.props.answeredQuestionsByUser.map((obj)=>(
                     <UserQuestionCard
+                        questionID = {obj.id}
                         questionStatus = 'answered'
                         authorName = {this.props.usersAvatar[obj.author].name}
                         questionText={obj.optionOne.text}
