@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {connect} from "react-redux";
 
 class ViewPollResult extends Component{
     render(){
@@ -10,4 +11,12 @@ class ViewPollResult extends Component{
     }
 }
 
-export default ViewPollResult
+function mapStateToProps({questions, authedUser, users}) {
+    return {
+        authedUser,
+        users,
+        questions
+    }
+}
+
+export default connect(mapStateToProps)(ViewPollResult)

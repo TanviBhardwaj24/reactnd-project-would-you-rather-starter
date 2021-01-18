@@ -30,7 +30,7 @@ class App extends Component {
                             </Route>) :
                         <Switch>
                             <Route path="/" component={HomePage} />
-                            {/*<Route path="/questions/:question_id" component={UserQuestionCardCard} />*/}
+                            <Route path="/questions/:question_id" component={ViewPollQuestion} />
                         </Switch>}
                 </div>
             </Router>
