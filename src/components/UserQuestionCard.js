@@ -32,7 +32,10 @@ class UserQuestionCard extends Component {
 
         if (questionStatus === 'unanswered' && this.state.viewPoll === true) {
             //redirect to the page which allows the user to vote for the question
-            <ViewPollQuestion/>
+            <ViewPollQuestion
+                userAvatar={this.props.userAvatar}
+                authorName={this.props.authorName}
+                questionText={this.props.questionText} />
             // return <Redirect push to={`/questions/${questionID}`} />;
 
         } else if (questionStatus === 'answered' && this.state.viewPoll === true) {

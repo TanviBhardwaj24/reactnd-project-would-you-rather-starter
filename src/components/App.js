@@ -5,11 +5,9 @@ import {handleInitialData} from "../actions/shared";
 import Login from "./login";
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import {Switch} from 'react-router-dom';
-import NavBar from "./NavBar";
-import authedUser from "../reducers/authedUser";
 import HomePage from "./HomePage";
 import ViewPollQuestion from "./ViewPollQuestion";
-import UserQuestionCard from "./UserQuestionCard";
+import PageDoesNotExist from "./PageDoesNotExist";
 
 
 class App extends Component {
@@ -29,7 +27,8 @@ class App extends Component {
                                 <Login/>
                             </Route>) :
                         <Switch>
-                            <Route path="/" component={HomePage} />
+                            <Route exact path="/" component={HomePage} />
+                            {/*<Route path='/questions/wrong_id' component={PageDoesNotExist} />*/}
                             <Route path="/questions/:question_id" component={ViewPollQuestion} />
                         </Switch>}
                 </div>

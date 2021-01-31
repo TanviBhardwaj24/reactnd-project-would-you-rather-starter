@@ -3,7 +3,7 @@ import NavBar from "./NavBar";
 import {connect} from "react-redux";
 import {handleInitialData} from "../actions/shared";
 import UserQuestionCard from "./UserQuestionCard";
-import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
+import { Nav} from 'react-bootstrap';
 
 class HomePage extends Component {
     constructor(props) {
