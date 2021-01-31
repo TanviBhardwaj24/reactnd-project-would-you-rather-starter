@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import Card from "react-bootstrap/Card";
 import {Link} from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import authedUser from "../reducers/authedUser";
+import {handleSaveQuestionAnswer} from "../actions/shared";
 
 class ViewPollQuestion extends Component {
     constructor(props) {
@@ -22,16 +24,16 @@ class ViewPollQuestion extends Component {
 
     onFormSubmit(event) {
         event.preventDefault();
-        // if (this.state.userAnswer !== ''){
-        //
-        // }
+        if (this.state.userAnswer !== '') {
+            this.props.handleSaveQuestionAnswer(this.props.authedUser, this.props.match.params.question_id, this.state.userAnswer);
+        }
         console.log(this.state.userAnswer)
     }
 
     render() {
         console.log('the props on the viewpollquestion page are ', this.props)
         const userAvatar = this.props.userAvatar;
-        const authorName = this.props.authorName;
+        // const authorName = this.props.authorName;
         const questionText = this.props.questionText;
         console.log('the auth user is', this.props.authedUser);
         const question_id = this.props.match.params.question_id;
@@ -40,15 +42,17 @@ class ViewPollQuestion extends Component {
         console.log('the logged in user is', this.props.loggedInUser);
 
 
-
         // determine if the question has been answered by the logged in user
         const hasQuesBeenAnswered = Object.keys(this.props.loggedInUser.answers).includes(question_id)
         const questionIdObj = Object.values(this.props.questions[question_id])
         // const usersObj = Object.values(this.props.users[])
-        console.log('questionIdObj', questionIdObj)
+        // console.log('questionIdObj', questionIdObj)
         const questionUsersName = this.props.users[(questionIdObj[1])[1]]
         // console.log('usersObj', usersObj)
-        console.log('authorName is', questionUsersName);
+        const authorID = this.props.questions[question_id].author;
+        // console.log('authorID is', authorID);
+        const authorName = this.props.users[authorID].name;
+        const authorAvatarURL = this.props.users[authorID].avatarURL;
 
         return (
             <div>
@@ -56,25 +60,27 @@ class ViewPollQuestion extends Component {
                     {!hasQuesBeenAnswered ?
                         <Card style={{marginBlockStart: '2rem', marginInlineStart: '29rem', width: '25rem'}}>
                             <Card.Text>
-                                <b>{questionUsersName}</b> asks
+                                <b>{authorName}</b> asks
                             </Card.Text>
-                            <Card.Img variant="top" src={this.props.userAvatar}/>
+                            <Card.Img variant="top" src={authorAvatarURL}/>
                             <Card.Body>
                                 <Card.Title>Would You Rather</Card.Title>
                                 <div className="radio">
-                                        <input
-                                            type="radio"
-                                            value="optionOne"
-                                            onChange={this.onValueChange}
-                                        />
-                                        <label><Card.Text>
-                                            {questionIdObj[3].text}
-                                        </Card.Text></label>
+                                    <input
+                                        type="radio"
+                                        value="optionOne"
+                                        checked={this.state.userAnswer === 'optionOne'}
+                                        onChange={this.onValueChange}
+                                    />
+                                    <label><Card.Text>
+                                        {questionIdObj[3].text}
+                                    </Card.Text></label>
                                 </div>
                                 <div className="radio">
                                     <input
                                         type="radio"
                                         value="optionTwo"
+                                        checked={this.state.userAnswer === 'optionTwo'}
                                         onChange={this.onValueChange}
                                     />
                                     <label><Card.Text>
@@ -106,4 +112,4 @@ function mapStateToProps({questions, authedUser, users}, props) {
     }
 }
 
-export default connect(mapStateToProps)(ViewPollQuestion)
+export default connect(mapStateToProps, {handleSaveQuestionAnswer})(ViewPollQuestion)
