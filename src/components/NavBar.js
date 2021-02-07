@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import { Navbar, NavItem, NavDropdown, MenuItem, Nav } from 'react-bootstrap';
+import { Navbar,NavLink, NavItem, NavDropdown, MenuItem, Nav } from 'react-bootstrap';
 import {connect} from "react-redux";
 import {handleInitialData} from "../actions/shared";
 import {setAuthedUser} from "../actions/authedUser";
+import { Link } from 'react-router-dom';
 
 class NavBar extends Component {
     logout(event){
@@ -18,7 +19,8 @@ class NavBar extends Component {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#newQuestion">New Question</Nav.Link>
+                        {/*<Nav.Link href="#newQuestion">New Question</Nav.Link>*/}
+                        <NavLink to='/newQuestion'>New Question</NavLink>
                         <Nav.Link href="#leaderboard">LeaderBoard</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

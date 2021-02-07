@@ -10,11 +10,11 @@ export default function questions(state={}, action){
         case USERS_ANSWER_TO_QUESTION:
             return {
                 ...state,
-                [action.question_id]: {
-                    ...state[action.question_id],
+                [action.qid]: {
+                    ...state[action.qid],
                     [action.answer]: {
-                        ...state[action.question_id][action.answer],
-                        votes: state[action.question_id][action.answer].votes.concat([action.authedUser])
+                        ...state[action.qid][action.answer],
+                        votes: state[action.qid][action.answer].votes.concat([action.authedUser])
                     }
                 }
             }

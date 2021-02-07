@@ -8,6 +8,7 @@ import {Switch} from 'react-router-dom';
 import HomePage from "./HomePage";
 import ViewPollQuestion from "./ViewPollQuestion";
 import PageDoesNotExist from "./PageDoesNotExist";
+import NewQuestion from "./NewQuestion";
 
 
 class App extends Component {
@@ -30,6 +31,7 @@ class App extends Component {
                             <Route exact path="/" component={HomePage} />
                             {/*<Route path='/questions/wrong_id' component={PageDoesNotExist} />*/}
                             <Route path="/questions/:question_id" component={ViewPollQuestion} />
+                            <Route path = "/newQuestion" component={NewQuestion}></Route>
                         </Switch>}
                 </div>
             </Router>

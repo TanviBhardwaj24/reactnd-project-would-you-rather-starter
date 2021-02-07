@@ -1,7 +1,6 @@
 import {getInitialData} from "../utils/api";
 import {receiveUsers, saveUsersAnswer} from "./users";
 import {receiveQuestions, usersAnswerToQuestion} from "./questions";
-import {setAuthedUser} from "./authedUser";
 import {_saveQuestionAnswer} from "../utils/_DATA";
 
 // const AUTHED_ID='sarahedo'
@@ -16,13 +15,17 @@ export function handleInitialData(){
     }
 }
 
-export function handleSaveQuestionAnswer(authedUser,question_id, answer) {
+export function handleSaveQuestionAnswer(authedUser,qid, answer) {
     return (dispatch) => {
         const data = {
+            // authedUser,
+            // qid: question_id,
+            // answer,
             authedUser,
-            question_id,
+            qid,
             answer,
         }
+
 
         return _saveQuestionAnswer(data)
             .then(() => {
