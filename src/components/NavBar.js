@@ -20,7 +20,9 @@ class NavBar extends Component {
                     <Nav className="mr-auto">
                         <Nav.Link href="#home">Home</Nav.Link>
                         {/*<Nav.Link href="#newQuestion">New Question</Nav.Link>*/}
-                        <NavLink to='/newQuestion'>New Question</NavLink>
+                        <NavLink to='/add' as={Link}>
+                            New Question
+                        </NavLink>
                         <Nav.Link href="#leaderboard">LeaderBoard</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

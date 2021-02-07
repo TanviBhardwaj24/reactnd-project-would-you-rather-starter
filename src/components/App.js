@@ -31,7 +31,7 @@ class App extends Component {
                             <Route exact path="/" component={HomePage} />
                             {/*<Route path='/questions/wrong_id' component={PageDoesNotExist} />*/}
                             <Route path="/questions/:question_id" component={ViewPollQuestion} />
-                            <Route path = "/newQuestion" component={NewQuestion}></Route>
+                            <Route path = "/add" component={NewQuestion}></Route>
                         </Switch>}
                 </div>
             </Router>
