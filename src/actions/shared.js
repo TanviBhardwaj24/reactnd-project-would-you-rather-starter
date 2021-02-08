@@ -44,7 +44,7 @@ export function handleSaveNewQuestion(authedUser, optionOneText, optionTwoText) 
     console.log('authedUser',authedUser)
     return (dispatch) => {
         const data = {
-            authedUser,
+            author:authedUser,
             optionOneText,
             optionTwoText,
         }
