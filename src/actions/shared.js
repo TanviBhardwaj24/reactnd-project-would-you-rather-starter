@@ -38,17 +38,18 @@ export function handleSaveQuestionAnswer(authedUser, qid, answer) {
     }
 }
 
-export function handleSaveNewQuestion(authedUser, newQuestionOptionOne, newQuestionOptionTwo) {
-    console.log('newQuestionOptionOne',newQuestionOptionOne)
-    console.log('newQuestionOptionTwo',newQuestionOptionTwo)
+export function handleSaveNewQuestion(authedUser, optionOneText, optionTwoText) {
+    console.log('optionOneText',optionOneText)
+    console.log('optionTwoText',optionTwoText)
     console.log('authedUser',authedUser)
     return (dispatch) => {
         const data = {
             authedUser,
-            newQuestionOptionOne,
-            newQuestionOptionTwo,
+            optionOneText,
+            optionTwoText,
         }
         return _saveQuestion(data).then((question)=>{
+            console.log('question is ', question)
             dispatch(addNewQuestion(question))
             dispatch(saveNewQuestionByUser(question))
         }).catch((error)=>{

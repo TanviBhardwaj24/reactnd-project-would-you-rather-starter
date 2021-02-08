@@ -8,8 +8,8 @@ class NewQuestion extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            newQuestionOptionOne: '',
-            newQuestionOptionTwo: '',
+            optionOneText: '',
+            optionTwoText: '',
         }
         // console.log('my props are ', this.props.authedUser)
         this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -19,19 +19,19 @@ class NewQuestion extends Component {
 
     onOptionOneValueChange(event) {
         this.setState({
-            newQuestionOptionOne: event.target.value
+            optionOneText: event.target.value
         });
     }
 
     onOptionTwoValueChange(event) {
         this.setState({
-            newQuestionOptionTwo: event.target.value
+            optionTwoText: event.target.value
         });
     }
 
     onFormSubmit(event) {
         event.preventDefault();
-        this.props.handleSaveNewQuestion(this.props.authedUser, this.state.newQuestionOptionOne, this.state.newQuestionOptionTwo);
+        this.props.handleSaveNewQuestion(this.props.authedUser, this.state.optionOneText, this.state.optionTwoText);
 
     }
 
@@ -72,7 +72,7 @@ class NewQuestion extends Component {
                             type="text"
                             className="form-control"
                             placeholder="Enter option one text"
-                            value ={this.state.newQuestionOptionOne}
+                            value ={this.state.optionOneText}
                             onChange={this.onOptionOneValueChange}/>
                         <br/>
                         <span style={{
@@ -90,7 +90,7 @@ class NewQuestion extends Component {
                             type="text"
                             className="form-control"
                             placeholder="Enter option two text"
-                            value ={this.state.newQuestionOptionTwo}
+                            value ={this.state.optionTwoText}
                             onChange={this.onOptionTwoValueChange}/>
                         <button
                             type='submit'
