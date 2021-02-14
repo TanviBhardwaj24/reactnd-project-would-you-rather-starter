@@ -57,9 +57,10 @@ class Login extends Component {
                                         as='select'
                                         onChange={(event) => this.handleUserInput(event)}
                                     >
-                                        <option selected disabled>User Name</option>
+                                        <option
+                                            selected disabled>User Name</option>
                                         {this.props.users.map(({name, id}) => (
-                                            <option value={id}>{name}</option>
+                                            <option key={id} value={id}>{name}</option>
                                         ))}
                                     </Form.Control>
                                 </Form.Group>

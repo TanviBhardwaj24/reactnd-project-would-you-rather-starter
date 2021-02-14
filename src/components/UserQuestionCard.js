@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button'
-import {Redirect,Link} from 'react-router-dom';
-import {formatQuestion} from "../utils/api"
+import {Link} from 'react-router-dom';
 import ViewPollQuestion from "./ViewPollQuestion";
 import ViewPollResult from "./ViewPollResult";
 
@@ -36,12 +35,10 @@ class UserQuestionCard extends Component {
                 userAvatar={this.props.userAvatar}
                 authorName={this.props.authorName}
                 questionText={this.props.questionText} />
-            // return <Redirect push to={`/questions/${questionID}`} />;
 
         } else if (questionStatus === 'answered' && this.state.viewPoll === true) {
             //redirect to the page which allows the user to view who voted for the question
             <ViewPollResult/>
-            // return <Redirect push to={`/questions/${questionID}`} />;
         }
 
         return (

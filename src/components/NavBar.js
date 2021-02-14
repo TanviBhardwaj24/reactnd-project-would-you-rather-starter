@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import { Navbar,NavLink, NavItem, NavDropdown, MenuItem, Nav } from 'react-bootstrap';
+import { Navbar,NavLink, Nav } from 'react-bootstrap';
 import {connect} from "react-redux";
-import {handleInitialData} from "../actions/shared";
 import {setAuthedUser} from "../actions/authedUser";
 import { Link } from 'react-router-dom';
 
@@ -18,12 +17,15 @@ class NavBar extends Component {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        {/*<Nav.Link href="#newQuestion">New Question</Nav.Link>*/}
+                        <NavLink to = '/' as={Link}>
+                            Home
+                        </NavLink>
                         <NavLink to='/add' as={Link}>
                             New Question
                         </NavLink>
-                        <Nav.Link href="#leaderboard">LeaderBoard</Nav.Link>
+                        <NavLink to = '/leaderboard' as={Link}>
+                            LeaderBoard
+                        </NavLink>
                     </Nav>
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">

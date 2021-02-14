@@ -3,7 +3,8 @@ import {connect} from "react-redux";
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form'
 import { Redirect } from 'react-router';
-import {handleSaveQuestionAnswer, handleSaveNewQuestion} from "../actions/shared";
+import {handleSaveNewQuestion} from "../actions/shared";
+import NavBar from "./NavBar";
 
 class NewQuestion extends Component {
     constructor(props) {
@@ -33,9 +34,6 @@ class NewQuestion extends Component {
     onFormSubmit(event) {
         event.preventDefault();
         this.props.handleSaveNewQuestion(this.props.authedUser, this.state.optionOneText, this.state.optionTwoText)
-        // handleSaveNewQuestion(this.props.authedUser, this.state.optionOneText, this.state.optionTwoText).then(()=>{
-        //     this.setState({ isSubmit:true });
-        // })
 
         this.setState(() => ({
             optionA: '',
@@ -44,14 +42,16 @@ class NewQuestion extends Component {
         }))
 
         console.log('isSubmit',this.state.isSubmit)
+        console.log('optionA',this.state.optionA)
     }
 
     render() {
         if(this.state.isSubmit === true){
-            <Redirect to="/" />;
+            return <Redirect to="/" />;
         }
         return (
             <div>
+                <NavBar></NavBar>
                 <Card>
                     <Card.Title style={{
                         display: "flex",
@@ -106,6 +106,7 @@ class NewQuestion extends Component {
                             placeholder="Enter option two text"
                             value ={this.state.optionTwoText}
                             onChange={this.onOptionTwoValueChange}/>
+                            <br/>
                         <button
                             type='submit'
                             style={{
@@ -129,4 +130,3 @@ function mapStateToProps({authedUser}) {
 }
 
 export default connect(mapStateToProps, {handleSaveNewQuestion})(NewQuestion)
-// export default connect()(NewQuestion)

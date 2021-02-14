@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import Card from "react-bootstrap/Card";
-import {Link} from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import authedUser from "../reducers/authedUser";
 import {handleSaveQuestionAnswer} from "../actions/shared";
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import NavBar from "./NavBar";
+import { Redirect } from 'react-router';
 
 class ViewPollQuestion extends Component {
     constructor(props) {
@@ -28,29 +27,21 @@ class ViewPollQuestion extends Component {
         if (this.state.userAnswer !== '') {
             this.props.handleSaveQuestionAnswer(this.props.authedUser, this.props.match.params.question_id, this.state.userAnswer);
         }
-        console.log(this.state.userAnswer)
+        console.log('the user selected this answer', this.state.userAnswer)
     }
 
     render() {
         console.log('the props on the viewpollquestion page are ', this.props)
-        const userAvatar = this.props.userAvatar;
-        const questionText = this.props.questionText;
-        // console.log('the auth user is', this.props.authedUser);
         const question_id = this.props.match.params.question_id;
-        const questionAuthorName = this.props.users[question_id.author];
-        // console.log('this.props.params', question_id);
-        // console.log('the logged in user is', this.props.loggedInUser);
-
+        if(question_id === undefined){
+            return <Redirect to="/questions/incorrect_id" />;
+        }
 
         // determine if the question has been answered by the logged in user
         const hasQuesBeenAnswered = Object.keys(this.props.loggedInUser.answers).includes(question_id)
         const questionIdObj = Object.values(this.props.questions[question_id])
-        // const usersObj = Object.values(this.props.users[])
         console.log('questionIdObj', questionIdObj)
-        const questionUsersName = this.props.users[(questionIdObj[1])[1]]
-        // console.log('usersObj', usersObj)
         const authorID = this.props.questions[question_id].author;
-        // console.log('authorID is', authorID);
         const authorName = this.props.users[authorID].name;
         const authorAvatarURL = this.props.users[authorID].avatarURL;
 
@@ -62,6 +53,7 @@ class ViewPollQuestion extends Component {
 
         return (
             <div>
+                <NavBar></NavBar>
                 <form onSubmit={this.onFormSubmit}>
                     {!hasQuesBeenAnswered ?
                         <Card style={{marginBlockStart: '2rem', marginInlineStart: '29rem', width: '25rem'}}>
@@ -100,30 +92,35 @@ class ViewPollQuestion extends Component {
                                 </button>
                             </Card.Body>
                         </Card> :
-                    <Card style={{marginBlockStart: '2rem', marginInlineStart: '29rem', width: '25rem'}}>
-                        <Card.Text>
-                            <b>Asked By {authorName}</b>
-                        </Card.Text>
-                        <Card.Img src={authorAvatarURL}/>
-                        <br/>
-                        <Card.Title style={{textAlign:'center'}}><h1>Results</h1></Card.Title>
-                        <Card>
-                            <Card.Text>
-                            Would You Rather <b>{questionIdObj[3].text}</b>
-                            </Card.Text>
-                            <ProgressBar now={votesOptionOnePercentage} label={`${votesOptionOnePercentage}%`}></ProgressBar>
-                            <span>{votesOptionOne} out of {votesTotal}</span>
-                        </Card>
-                        <br/>
-                        <Card>
-                            <Card.Text>
-                            Would You Rather <b>{questionIdObj[4].text}</b>
-                            </Card.Text>
-                            <ProgressBar now={votesOptionTwoPercentage} label={`${votesOptionTwoPercentage}%`}></ProgressBar>
-                            <span>{votesOptionTwo} out of {votesTotal}</span>
-                        </Card>
-                    </Card>}
-
+                        <div>
+                            <Card style={{marginBlockStart: '2rem', marginInlineStart: '29rem', width: '25rem'}}>
+                                <Card.Text>
+                                    <b>Asked By {authorName}</b>
+                                </Card.Text>
+                                <Card.Img src={authorAvatarURL}/>
+                                <br/>
+                                <Card.Title style={{textAlign: 'center'}}><h1>Results</h1></Card.Title>
+                                <Card>
+                                    <Card.Text>
+                                        Would You Rather <b>{questionIdObj[3].text}</b>
+                                    </Card.Text>
+                                    <ProgressBar now={votesOptionOnePercentage}
+                                                 label={`${votesOptionOnePercentage}%`}></ProgressBar>
+                                    <span>{votesOptionOne} out of {votesTotal}</span>
+                                </Card>
+                                <br/>
+                                <Card>
+                                    <Card.Text>
+                                        Would You Rather <b>{questionIdObj[4].text}</b>
+                                    </Card.Text>
+                                    <ProgressBar now={votesOptionTwoPercentage}
+                                                 label={`${votesOptionTwoPercentage}%`}></ProgressBar>
+                                    <span>{votesOptionTwo} out of {votesTotal}</span>
+                                </Card>
+                            </Card>
+                            <span>The user chose this option :
+                             <b>{this.props.users[this.props.authedUser].answers[questionIdObj[0]]}</b>   </span>
+                        </div>}
                 </form>
 
             </div>
@@ -131,7 +128,7 @@ class ViewPollQuestion extends Component {
     }
 }
 
-function mapStateToProps({questions, authedUser, users}, props) {
+function mapStateToProps({questions, authedUser, users}) {
     const loggedInUser = authedUser ? users[authedUser] : null;
     return {
         loggedInUser,

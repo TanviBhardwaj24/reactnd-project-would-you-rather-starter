@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import NavBar from "./NavBar";
 import {connect} from "react-redux";
-import {handleInitialData} from "../actions/shared";
 import UserQuestionCard from "./UserQuestionCard";
 import { Nav} from 'react-bootstrap';
 
@@ -9,18 +8,18 @@ class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state =({
-            key: "unanswered"
+            keyval: "unanswered"
         })
         this.handleSelect = this.handleSelect.bind(this)
     }
-    handleSelect(key){
+    handleSelect(keyval){
         this.setState({
-            key: key
+            keyval: keyval
         })
     }
     render() {
         console.log('props on the homepage are', this.props)
-        console.log('this.state.key',this.state.key)
+        console.log('this.state.keyval',this.state.keyval)
         return (
             <div>
                 <NavBar/>
@@ -33,7 +32,7 @@ class HomePage extends Component {
                         <Nav.Link eventKey="answered">Answered Questions</Nav.Link>
                     </Nav.Item>
                 </Nav>
-                {this.state.key === "unanswered" ? this.props.unansweredQuestionsByUser.map((obj)=>(
+                {this.state.keyval === "unanswered" ? this.props.unansweredQuestionsByUser.map((obj)=>(
                     <UserQuestionCard
                         questionID = {obj.id}
                         questionStatus = 'unanswered'
