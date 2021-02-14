@@ -18,8 +18,6 @@ class HomePage extends Component {
         })
     }
     render() {
-        console.log('props on the homepage are', this.props)
-        console.log('this.state.keyval',this.state.keyval)
         return (
             <div>
                 <NavBar/>
@@ -34,6 +32,7 @@ class HomePage extends Component {
                 </Nav>
                 {this.state.keyval === "unanswered" ? this.props.unansweredQuestionsByUser.map((obj)=>(
                     <UserQuestionCard
+                        key = {obj.id}
                         questionID = {obj.id}
                         questionStatus = 'unanswered'
                         authorName = {this.props.usersAvatar[obj.author].name}
@@ -41,6 +40,7 @@ class HomePage extends Component {
                         userAvatar={this.props.usersAvatar[obj.author].avatarURL}/>
                 )):this.props.answeredQuestionsByUser.map((obj)=>(
                     <UserQuestionCard
+                        key = {obj.id}
                         questionID = {obj.id}
                         questionStatus = 'answered'
                         authorName = {this.props.usersAvatar[obj.author].name}

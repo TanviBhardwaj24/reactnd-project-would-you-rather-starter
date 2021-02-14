@@ -10,12 +10,12 @@ class LeaderBoard extends Component {
 
     render() {
         return (
-            <div>
+            <div align={"center"}>
                 <NavBar></NavBar>
                 {this.props.leaderResults.map((user,index) => (
                     <div key={index}>
                         <Card.Header>
-                            LeaderShip Board
+                           Position: {index+1}
                         </Card.Header>
                         <br/>
                         <Card.Title>

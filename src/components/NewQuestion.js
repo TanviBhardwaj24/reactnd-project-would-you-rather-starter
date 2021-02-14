@@ -40,9 +40,6 @@ class NewQuestion extends Component {
             optionB: '',
             isSubmit:true,
         }))
-
-        console.log('isSubmit',this.state.isSubmit)
-        console.log('optionA',this.state.optionA)
     }
 
     render() {

@@ -19,7 +19,6 @@ class Login extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-        console.log('the value of authedUser', this.state.authedUser);
         this.props.dispatch(setAuthedUser(this.state.authedUser));
     }
 
@@ -54,11 +53,11 @@ class Login extends Component {
                                     </Form.Label>
                                     <br/>
                                     <Form.Control
+                                        value={this.state.authedUser || ''}
                                         as='select'
                                         onChange={(event) => this.handleUserInput(event)}
                                     >
-                                        <option
-                                            selected disabled>User Name</option>
+                                        <option value={''} disabled>User Name</option>
                                         {this.props.users.map(({name, id}) => (
                                             <option key={id} value={id}>{name}</option>
                                         ))}

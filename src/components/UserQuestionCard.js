@@ -22,7 +22,6 @@ class UserQuestionCard extends Component {
     }
 
     render() {
-        console.log('the props on my user card page are ', this.props)
         const questionID = this.props.questionID;
         const questionStatus = this.props.questionStatus;
         const questionText = this.props.questionText;

@@ -27,11 +27,9 @@ class ViewPollQuestion extends Component {
         if (this.state.userAnswer !== '') {
             this.props.handleSaveQuestionAnswer(this.props.authedUser, this.props.match.params.question_id, this.state.userAnswer);
         }
-        console.log('the user selected this answer', this.state.userAnswer)
     }
 
     render() {
-        console.log('the props on the viewpollquestion page are ', this.props)
         const question_id = this.props.match.params.question_id;
         if(question_id === undefined){
             return <Redirect to="/questions/incorrect_id" />;
@@ -40,7 +38,6 @@ class ViewPollQuestion extends Component {
         // determine if the question has been answered by the logged in user
         const hasQuesBeenAnswered = Object.keys(this.props.loggedInUser.answers).includes(question_id)
         const questionIdObj = Object.values(this.props.questions[question_id])
-        console.log('questionIdObj', questionIdObj)
         const authorID = this.props.questions[question_id].author;
         const authorName = this.props.users[authorID].name;
         const authorAvatarURL = this.props.users[authorID].avatarURL;
